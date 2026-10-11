@@ -1,0 +1,25 @@
+
+# Network segmentation access policy
+
+# Each entry represents an allowed source-destination pair.
+allowed_connections = {
+    ("LOW_TRUST", "PUBLIC_WEB"),
+    ("ADMIN", "SENSITIVE"),
+    ("ADMIN", "LOW_TRUST")
+}
+
+def check_access(source, destination):
+    print(f"Request: {source} -> {destination}")
+
+    if (source, destination) in allowed_connections:
+        print("Access GRANTED")
+    else:
+        print("Access BLOCKED by segmentation policy")
+
+    print()
+
+# Simulate network access requests
+check_access("LOW_TRUST", "PUBLIC_WEB")
+check_access("LOW_TRUST", "SENSITIVE")
+check_access("LOW_TRUST", "ADMIN")
+check_access("ADMIN", "SENSITIVE")
