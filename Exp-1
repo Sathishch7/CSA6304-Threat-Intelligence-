@@ -1,0 +1,19 @@
+
+# Identify the Threat Intelligence Application Area
+
+scenario = input("Enter the business scenario: ").lower()
+
+if "bank" in scenario or "financial" in scenario or "transaction" in scenario:
+    print("Threat Intelligence Area: Banking Fraud Prevention")
+
+elif "hospital" in scenario or "healthcare" in scenario or "patient" in scenario:
+    print("Threat Intelligence Area: Healthcare Data Protection")
+
+elif "online shopping" in scenario or "e-commerce" in scenario or "customer payment" in scenario:
+    print("Threat Intelligence Area: E-commerce Fraud Prevention")
+
+elif "network" in scenario or "server" in scenario or "cyberattack" in scenario:
+    print("Threat Intelligence Area: Network Security and Cyberattack Detection")
+
+else:
+    print("Threat Intelligence Area: General Cybersecurity and Threat Monitoring")
