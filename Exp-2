@@ -1,0 +1,30 @@
+
+import socket
+
+def scan_ports(host, ports):
+    print(f"\nScanning host: {host}")
+
+    for port in ports:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(0.5)
+
+        try:
+            result = sock.connect_ex((host, port))
+
+            if result == 0:
+                print(f"Port {port}: OPEN")
+        except socket.gaierror:
+            print("Invalid hostname.")
+            return
+        except OSError as error:
+            print(f"Error scanning port {port}: {error}")
+        finally:
+            sock.close()
+
+# Use only on localhost or an authorized test host.
+target = input("Enter target host (default: 127.0.0.1): ").strip()
+if not target:
+    target = "127.0.0.1"
+
+ports = [22, 53, 80, 135, 443, 445, 3306, 8080]
+scan_ports(target, ports)
