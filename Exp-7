@@ -1,0 +1,57 @@
+
+from collections import Counter
+
+# Sample raw logs:
+raw_logs = [
+    "2026-10-11 10:00:00 INFO auth User login success",
+    "2026-10-11 10:01:00 ERROR web Database connection failed",
+    "2026-10-11 10:02:00 WARNING auth Multiple login attempts",
+    "2026-10-11 10:03:00 ERROR web Request processing failed",
+    "2026-10-11 10:04:00 INFO web Page loaded"
+]
+
+# Logstash-style parsing
+def parse_log(line):
+    parts = line.split(" ", 4)
+
+    if len(parts) != 5:
+        return None
+
+    date, time, level, service, message = parts
+
+    return {
+        "timestamp": date + " " + time,
+        "level": level,
+        "service": service,
+        "message": message
+    }
+
+# Elasticsearch-style indexing
+event_index = {}
+
+for number, line in enumerate(raw_logs, start=1):
+    event = parse_log(line)
+
+    if event:
+        event_index[number] = event
+
+# Kibana-style aggregation
+level_counts = Counter(
+    event["level"] for event in event_index.values()
+)
+
+service_counts = Counter(
+    event["service"] for event in event_index.values()
+)
+
+print("=== Indexed Events ===")
+for event_id, event in event_index.items():
+    print(event_id, event)
+
+print("\n=== Dashboard: Events by Level ===")
+for level, count in level_counts.items():
+    print(level, ":", count)
+
+print("\n=== Dashboard: Events by Service ===")
+for service, count in service_counts.items():
+    print(service, ":", count)
