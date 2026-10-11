@@ -1,0 +1,48 @@
+
+def classify_report(description, audience):
+    text = (description + " " + audience).lower()
+
+    categories = {
+        "Strategic": [
+            "executive", "management", "business risk",
+            "long-term", "industry trends", "decision-making"
+        ],
+        "Tactical": [
+            "security analyst", "attack techniques", "tactics",
+            "mitre", "ttps", "mitigation strategy"
+        ],
+        "Operational": [
+            "soc analyst", "incident responder", "ip address",
+            "domain", "hash", "active attack", "ioc",
+            "incident response"
+        ]
+    }
+
+    scores = {
+        category: sum(
+            keyword in text for keyword in keywords
+        )
+        for category, keywords in categories.items()
+    }
+
+    highest = max(scores.values())
+
+    if highest == 0:
+        return "Classification unclear: more information required."
+
+    winners = [
+        category for category, score in scores.items()
+        if score == highest
+    ]
+
+    if len(winners) > 1:
+        return "Classification ambiguous: review the report."
+
+    return winners[0]
+
+
+description = input("Enter report description: ")
+audience = input("Enter intended audience: ")
+
+result = classify_report(description, audience)
+print("Threat Intelligence Classification:", result)
