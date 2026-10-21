@@ -1,0 +1,21 @@
+def classify_activity(description):
+    text = description.lower()
+
+    stages = {
+        "Direction": ["requirement", "objective", "priority", "planning"],
+        "Collection": ["collect", "gather", "retrieve", "feeds"],
+        "Processing": ["clean", "normalize", "filter", "format"],
+        "Analysis": ["analyze", "investigate", "correlate", "interpret"],
+        "Dissemination": ["share", "report", "distribute", "communicate"],
+        "Feedback": ["feedback", "review", "improve", "evaluate"]
+    }
+
+    for stage, keywords in stages.items():
+        if any(word in text for word in keywords):
+            return stage
+
+    return "Unknown stage"
+
+
+activity = input("Enter activity description: ")
+print("Lifecycle Stage:", classify_activity(activity))
