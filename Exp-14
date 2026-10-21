@@ -1,0 +1,41 @@
+events = [
+    {"source": "Firewall", "ip": "192.168.1.10",
+     "event": "failed_login"},
+    {"source": "Server", "ip": "192.168.1.10",
+     "event": "failed_login"},
+    {"source": "IDS", "ip": "192.168.1.10",
+     "event": "suspicious_activity"}
+]
+
+print("1. Collecting raw events...")
+print("Events collected:", len(events))
+
+print("\n2. Normalizing events...")
+normalized = [
+    {
+        "source": e["source"],
+        "ip": e["ip"],
+        "event": e["event"].lower()
+    }
+    for e in events
+]
+
+print("Normalization completed.")
+
+print("\n3. Correlating events...")
+failed_logins = sum(
+    1 for e in normalized if e["event"] == "failed_login"
+)
+
+suspicious = any(
+    e["event"] == "suspicious_activity"
+    for e in normalized
+)
+
+print("Failed login events:", failed_logins)
+
+print("\n4. Alert generation...")
+if failed_logins >= 2 and suspicious:
+    print("ALERT: Possible coordinated attack detected!")
+else:
+    print("No correlated alert generated.")
