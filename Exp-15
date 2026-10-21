@@ -1,0 +1,29 @@
+def classify_incident(description):
+    text = description.lower()
+
+    categories = {
+        "phishing": ["phishing", "fake email", "malicious link"],
+        "unpatched vulnerability": [
+            "unpatched", "outdated software", "security patch"
+        ],
+        "misconfiguration": [
+            "misconfigured", "open storage", "incorrect permissions"
+        ],
+        "insider threat": [
+            "employee stole", "insider", "unauthorized employee"
+        ],
+        "supply-chain compromise": [
+            "third-party software", "vendor compromise",
+            "compromised update"
+        ]
+    }
+
+    for category, keywords in categories.items():
+        if any(word in text for word in keywords):
+            return category.title()
+
+    return "Unknown Root Cause"
+
+
+incident = input("Enter incident description: ")
+print("Root Cause:", classify_incident(incident))
