@@ -1,0 +1,18 @@
+connections = set()
+
+def firewall(direction, source, destination, protocol):
+    if direction == "OUTBOUND":
+        connections.add((source, destination, protocol))
+        return "ALLOWED: Outbound connection recorded"
+
+    reverse = (destination, source, protocol)
+
+    if reverse in connections:
+        return "ALLOWED: Return traffic"
+
+    return "BLOCKED: Unsolicited inbound traffic"
+
+
+print(firewall("OUTBOUND", "10.0.0.2", "8.8.8.8", "TCP"))
+print(firewall("INBOUND", "8.8.8.8", "10.0.0.2", "TCP"))
+print(firewall("INBOUND", "1.2.3.4", "10.0.0.2", "TCP"))
