@@ -1,0 +1,24 @@
+def defense_in_depth(attack):
+    layers = {
+        "Firewall": "malicious network traffic",
+        "Antivirus": "known malware",
+        "IDS": "suspicious behavior",
+        "Access Control": "unauthorized access"
+    }
+
+    print("Attack:", attack)
+    print("\nSecurity Layer Evaluation:")
+
+    for layer, threat in layers.items():
+        if threat in attack.lower():
+            print(layer, "BLOCKED the attack")
+            print("System protected by:", layer)
+            return
+
+        print(layer, "No matching threat detected")
+
+    print("WARNING: Attack passed all security layers!")
+
+
+attack = input("Enter attack description: ")
+defense_in_depth(attack)
