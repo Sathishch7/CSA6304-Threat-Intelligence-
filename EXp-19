@@ -1,0 +1,23 @@
+events = [
+    {"user": "Ravi", "action": "failed"},
+    {"user": "Ravi", "action": "failed"},
+    {"user": "Anu", "action": "success"},
+    {"user": "Ravi", "action": "success"}
+]
+
+# Search filter: action=failed
+filtered = [e for e in events if e["action"] == "failed"]
+
+print("Filtered Events:")
+for event in filtered:
+    print(event)
+
+# Stats count by user
+counts = {}
+for event in filtered:
+    user = event["user"]
+    counts[user] = counts.get(user, 0) + 1
+
+print("\nCount by User:")
+for user, count in counts.items():
+    print(user, ":", count)
