@@ -1,0 +1,19 @@
+description = input("Enter security control description: ").lower()
+
+if any(word in description for word in
+       ["policy", "risk", "vendor", "governance"]):
+    domain = "Organizational Controls"
+elif any(word in description for word in
+         ["training", "awareness", "employee"]):
+    domain = "People Controls"
+elif any(word in description for word in
+         ["door", "cctv", "building", "physical"]):
+    domain = "Physical Controls"
+elif any(word in description for word in
+         ["firewall", "encryption", "mfa", "authentication",
+          "antivirus", "network"]):
+    domain = "Technological Controls"
+else:
+    domain = "Unclassified - Manual Review Required"
+
+print("Annex A Domain:", domain)
