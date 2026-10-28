@@ -1,0 +1,26 @@
+import hashlib
+import os
+
+# Add verified, known-malicious SHA-256 hashes here.
+malicious_hashes = {
+    "replace_with_verified_malicious_sha256_hash"
+}
+
+filename = input("Enter file path: ")
+
+if not os.path.isfile(filename):
+    print("Error: File not found.")
+else:
+    sha256 = hashlib.sha256()
+
+    with open(filename, "rb") as file:
+        for chunk in iter(lambda: file.read(4096), b""):
+            sha256.update(chunk)
+
+    file_hash = sha256.hexdigest()
+    print("SHA-256:", file_hash)
+
+    if file_hash in malicious_hashes:
+        print("ALERT: Known malicious file detected!")
+    else:
+        print("No known malicious hash match.")
